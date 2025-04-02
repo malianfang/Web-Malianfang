@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let a =10
+        const title = "不变的值"
+        alert(title)
+        let  b ='10'
+        console.log(a == b)
+        console.log(a === b)
+        console.log(a + b)
+        console.log(a + Number(b))
+        let age =18
+        if(age >= 14) {
+            console.log('可以吃公家饭了')
+        } else {
+            console.log('侥幸逃脱')
+        }
+        for(let i = 0; i < 9; i++) {
+            console.log(i)
+
+        }
+        let hug = 100
+        while(true) {
+            console.log('循环')
+            hug = hug - 10
+            if(hug <= 0) {
+                break 
+            }
+          
+        }
+
+        function sayHello(name) {
+            console.log(`你好，${name}`)
+        }
+        sayHello('李华')
+        function sayHello2(name) {
+            console.log(`你好，${name}`)
+        }
+        sayHello2('李华')
+        function sayHello3(name) {
+            console.log(`你好，${name}`)
+            return 'hello' + '这是返回值'       }
+        sayHello3('李华')
+        result = sayHello3('李华')
+        console.log(result)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
