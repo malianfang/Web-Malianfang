@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //类和对象
+        class Car {
+            constructor(make,model,year) {
+                this.make = make
+                this.model = model
+                this.year = year
+            }
+            start() {
+                console.log(`启动${this.make} ${this.model} ${this.year}`)
+            }
+            stop() {
+                console.log(`停止${this.make} ${this.model} ${this.year}`)             
+            }
+        }
+        let myCar = new Car('Mi', 'Yu7',2025)
+        myCar.start()
+        myCar.stop()
+
+        class ElectricCar extends Car {
+            constructor(make,model,year,batteryCapacity) {
+                super(make,model,year)
+                this.batteryCapacity = batteryCapacity
+            }
+            charge() {
+                console.log(`充电${this.batteryCapacity}度`)          
+            }       
+        }
+        let myElectricCar = new ElectricCar('Tesla', 'Model S', 2024, 100)
+        myElectricCar.start()
+        myElectricCar.charge()
+        myElectricCar.stop()
+        //回调函数练习
+        console.log('回调函数练习')
+        setTimeout(function() {
+            console.log('这是一个延迟执行的回调函数')
+        }, 2000)
+
+        console.log('这是一个同步执行的代码')
+    </script>
+</head>
+
+<body>
+    <h1 onclick="alert('我被点击了')">javaScript语法</h1>
+    <div id="demo">div content</div>   
+</body>
+
+<script>
+    myDom = document.getElementById('demo')
+    console.log(myDom)
+    myDom.style.color = 'red'
+    myDom.innerHTML = '这是一个修改后的div内容'
+    myDom.onclick = function() {
+        alert('我也被点击了')
+    }
+</script>
+</html>
