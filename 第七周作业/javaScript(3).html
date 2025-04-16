@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 异步编程练习</title>
+</head>
+
+<body>
+    <h1>JavaScript 异步编程练习</h1>
+    <div id="demo">
+        
+    </div>
+    <script>
+        async function fetchData() {
+             await setTimeout(function () {
+                console.log("异步数据加载完成");
+            }, 2000); 
+         }
+         getSomething()
+            .then(
+                result => console.log('Async function finished successfully with result:', result),
+            )
+        console.log("这是同步代码")
+        async function getLastPushedDate(owner,repo) {
+            const url = `https://api.github.com/repos/${owner}/${repo}`;
+            try {
+                document.getElementById('demo').textContent = '加载中...';
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('网络响应失败');
+                }
+                const data = await response.json();
+                const pushedDate = new Date(data.pushed_at);
+                return pushedDate.toLocaleString(); // 格式化为本地日期格式
+            } catch (error) {
+                console.error('获取最后一次推送日期失败:', error);
+                return null;
+            }
+        }
+
+        //示例调用
+        getLastPushedDate('malianfang', 'Web-Malianfang').then(date => {
+            document.getElementById('demo').textContent = `最后一次推送日期: ${date}`;
+            console.log('最后一次推送日期:', date);
+        });
+        // ... existing code...
