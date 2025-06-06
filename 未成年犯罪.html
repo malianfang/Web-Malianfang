@@ -1,0 +1,1164 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未成年犯罪数据可视化</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <!-- Tailwind配置 -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#000000',
+              secondary: '#333333',
+              accent: '#ff3d00',
+              neutral: '#f5f5f5',
+              'neutral-dark': '#4a4a4a',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        }
+      }
+    </script>
+    
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .text-shadow {
+          text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card-hover {
+          transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-neutral text-primary overflow-x-hidden">
+    <!-- 左侧导航栏 -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-16 md:w-64 bg-primary text-white shadow-lg z-50 transition-all duration-300">
+      <div class="flex flex-col h-full">
+        <div class="p-4 flex items-center justify-center md:justify-start">
+          <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+            <i class="fa fa-balance-scale text-white"></i>
+          </div>
+          <h1 class="ml-3 text-xl font-bold hidden md:block">法治护航</h1>
+        </div>
+        
+        <nav class="flex-1 py-6 overflow-y-auto scrollbar-hide">
+          <ul class="space-y-1">
+            <li>
+              <a href="#home" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg mx-2 transition-all">
+                <i class="fa fa-home text-xl w-6 text-center"></i>
+                <span class="ml-3 hidden md:block">首页</span>
+              </a>
+            </li>
+            <li>
+              <a href="#overview" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg mx-2 transition-all">
+                <i class="fa fa-bar-chart text-xl w-6 text-center"></i>
+                <span class="ml-3 hidden md:block">现状概览</span>
+              </a>
+            </li>
+            <li>
+              <a href="#causes" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg mx-2 transition-all">
+                <i class="fa fa-lightbulb-o text-xl w-6 text-center"></i>
+                <span class="ml-3 hidden md:block">原因分析</span>
+              </a>
+            </li>
+            <li>
+              <a href="#cases" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg mx-2 transition-all">
+                <i class="fa fa-folder-open text-xl w-6 text-center"></i>
+                <span class="ml-3 hidden md:block">典型案例</span>
+              </a>
+            </li>
+            <li>
+              <a href="#prevention" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg mx-2 transition-all">
+                <i class="fa fa-shield text-xl w-6 text-center"></i>
+                <span class="ml-3 hidden md:block">预防措施</span>
+              </a>
+            </li>
+            <li>
+              <a href="#resources" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg mx-2 transition-all">
+                <i class="fa fa-book text-xl w-6 text-center"></i>
+                <span class="ml-3 hidden md:block">相关资源</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="p-4 border-t border-gray-700">
+          <a href="#contact" class="flex items-center p-3 text-white hover:bg-accent/80 rounded-lg transition-all">
+            <i class="fa fa-phone text-xl w-6 text-center"></i>
+            <span class="ml-3 hidden md:block">联系我们</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  
+    <!-- 主内容区 -->
+    <main class="ml-16 md:ml-64 min-h-screen">
+      <!-- 首页 -->
+      <section id="home" class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+          <div class="absolute inset-0 bg-[url('https://ts1.tc.mm.bing.net/th/id/R-C.16a983e8883a62ce5184c0478a3dc829?rik=pZffTX5iOQ%2boCw&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20190623%2fad3966e9c73c465d84a38eb62b560340.jpeg&ehk=OHGZlYMHyqSdFeio%2fGvIkGrQAHVB0310x81qFWjgt48%3d&risl=&pid=ImgRaw&r=0')] bg-cover bg-center"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 py-20 relative z-10">
+          <div class="max-w-3xl mx-auto text-center">
+            <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-6 leading-tight text-shadow">
+              守护青春 <span class="text-accent">远离犯罪</span>
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] mb-10 text-gray-200 leading-relaxed">
+              深入了解未成年犯罪现状，探寻背后的社会原因，共同努力预防青少年犯罪，为未成年人健康成长创造良好环境。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+              <a href="#overview" class="px-8 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg transition-all shadow-lg hover:shadow-xl">
+                查看现状数据
+              </a>
+              <a href="#prevention" class="px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all backdrop-blur-sm border border-white/30">
+                了解预防措施
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-neutral to-transparent"></div>
+      </section>
+  
+      <!-- 现状概览 -->
+      <section id="overview" class="py-20 bg-neutral">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">未成年犯罪现状概览</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">近年来，未成年人犯罪问题逐渐引起社会关注。以下是基于真实数据的现状分析，数据来源标注在各图表下方。</p>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <!-- 图表1：未成年犯罪人数趋势 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-line-chart text-accent mr-2"></i>
+                近五年未成年犯罪人数趋势
+              </h3>
+              <div class="h-80">
+                <canvas id="crimeTrendChart"></canvas>
+              </div>
+              <p class="text-sm text-gray-500 mt-2">数据来源：最高人民检察院工作报告（2020-2024）</p>
+            </div>
+            
+            <!-- 图表2：犯罪类型分布 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-pie-chart text-accent mr-2"></i>
+                未成年犯罪类型分布
+              </h3>
+              <div class="h-80">
+                <canvas id="crimeTypeChart"></canvas>
+              </div>
+              <p class="text-sm text-gray-500 mt-2">数据来源：中国青少年研究中心（2024）</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- 统计卡片1 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold">犯罪年龄分布</h3>
+                <i class="fa fa-users text-accent text-2xl"></i>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium">14-16岁</span>
+                    <span class="text-sm font-medium">38%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-accent h-2 rounded-full" style="width: 38%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium">16-18岁</span>
+                    <span class="text-sm font-medium">62%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-accent h-2 rounded-full" style="width: 62%"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-sm text-gray-500 mt-4">数据来源：中国预防青少年犯罪研究会（2023）</p>
+            </div>
+            
+            <!-- 统计卡片2 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold">城乡分布</h3>
+                <i class="fa fa-map-marker text-accent text-2xl"></i>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium">城市</span>
+                    <span class="text-sm font-medium">58%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-accent h-2 rounded-full" style="width: 58%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium">农村</span>
+                    <span class="text-sm font-medium">42%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-accent h-2 rounded-full" style="width: 42%"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-sm text-gray-500 mt-4">数据来源：最高人民法院（2024）</p>
+            </div>
+            
+            <!-- 统计卡片3 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold">性别比例</h3>
+                <i class="fa fa-venus-mars text-accent text-2xl"></i>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium">男性</span>
+                    <span class="text-sm font-medium">89%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-accent h-2 rounded-full" style="width: 89%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium">女性</span>
+                    <span class="text-sm font-medium">11%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-accent h-2 rounded-full" style="width: 11%"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-sm text-gray-500 mt-4">数据来源：公安部（2023）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- 原因分析 -->
+      <section id="causes" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">未成年犯罪原因分析</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">未成年犯罪是一个复杂的社会问题，涉及家庭、学校、社会等多个方面。以下是主要因素的分析。</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 原因卡片1 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="h-48 overflow-hidden">
+                <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/6314278c584e48b9822fb2060e62cee5~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;x-expires=1749808521&amp;x-signature=R6kXMzN1n%2FkXuXbhZh%2BoOAX3Ma4%3D" alt="家庭环境对未成年人的影响" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-3 flex items-center">
+                  <i class="fa fa-home text-accent mr-2"></i>
+                  家庭环境因素
+                </h3>
+                <p class="text-gray-600 mb-4">家庭教育的缺失、家庭结构的不完整、父母关系紧张等家庭环境因素，是导致未成年人犯罪的重要原因。</p>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">父母离异家庭的孩子犯罪率高出27%</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">家庭暴力环境下成长的孩子犯罪倾向更高</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">疏于管教的孩子更容易受到不良影响</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">数据来源：中国青少年研究中心（2024）</p>
+              </div>
+            </div>
+            
+            <!-- 原因卡片2 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="h-48 overflow-hidden">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/1d816c6292dd48398daaff4caf3d9bb8~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;x-expires=1749808566&amp;x-signature=V6t%2BEolFxWrV0Wtd5YtaWjB%2BUdA%3D" alt="学校教育对未成年人的影响" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-3 flex items-center">
+                  <i class="fa fa-graduation-cap text-accent mr-2"></i>
+                  学校教育因素
+                </h3>
+                <p class="text-gray-600 mb-4">学校教育的不足、师生关系不和谐、校园暴力等问题，对未成年人的成长和价值观形成产生负面影响。</p>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">辍学学生犯罪率是在校学生的4.5倍</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">遭受校园欺凌的学生更容易产生心理问题</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">法制教育缺失导致法律意识淡薄</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">数据来源：教育部基础教育司（2023）</p>
+              </div>
+            </div>
+            
+            <!-- 原因卡片3 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="h-48 overflow-hidden">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/0cf3b98bf86745b5ad21f6f0a77e8dc8~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;x-expires=1749808601&amp;x-signature=hoBlu2J5l5WRIbC41sUrk3pP6oA%3D" alt="社会环境对未成年人的影响" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-3 flex items-center">
+                  <i class="fa fa-users text-accent mr-2"></i>
+                  社会环境因素
+                </h3>
+                <p class="text-gray-600 mb-4">社会不良文化、网络环境、社区环境等外部因素，对未成年人的行为和价值观产生潜移默化的影响。</p>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">每天上网超过4小时的青少年犯罪率增加35%</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">不良社区环境与青少年犯罪呈正相关</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 rounded-full bg-accent mr-2"></div>
+                    <span class="text-sm">暴力、色情内容容易诱发青少年模仿犯罪</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">数据来源：中国社会科学院社会学研究所（2024）</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 图表3：原因影响程度分析 -->
+          <div class="mt-16 bg-white rounded-xl shadow-lg p-6 card-hover">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="fa fa-bar-chart text-accent mr-2"></i>
+              各因素对未成年犯罪的影响程度
+            </h3>
+            <div class="h-80">
+              <canvas id="factorsChart"></canvas>
+            </div>
+            <p class="text-sm text-gray-500 mt-2">数据来源：中国青少年研究中心（2024）</p>
+          </div>
+        </div>
+      </section>
+  
+      <!-- 典型案例 -->
+      <section id="cases" class="py-20 bg-neutral">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">典型案例分析</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">通过实际案例，深入了解未成年犯罪的特点、原因及法律后果，从中吸取教训，预防类似事件的发生。</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 案例1 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="p-6 border-b border-gray-100">
+                <h3 class="text-xl font-bold mb-2">案例一：校园欺凌引发的故意伤害案</h3>
+                <p class="text-gray-500 text-sm">16岁少年因长期遭受校园欺凌，最终持刀伤害同学致重伤</p>
+              </div>
+              <div class="p-6">
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-gavel text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件结果</h4>
+                    <p class="text-gray-600 text-sm">法院以故意伤害罪判处有期徒刑3年，缓刑4年，并责令其父母加强监管和教育。</p>
+                  </div>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-lightbulb-o text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件启示</h4>
+                    <p class="text-gray-600 text-sm">长期遭受欺凌可能导致未成年人心理扭曲，采取极端行为。学校和家长应重视校园欺凌问题，及时干预。</p>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="text-accent hover:text-accent/80 font-medium flex items-center">
+        
+                </a>
+              </div>
+            </div>
+            
+            <!-- 案例2 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="p-6 border-b border-gray-100">
+                <h3 class="text-xl font-bold mb-2">案例二：未成年人网络盗窃案</h3>
+                <p class="text-gray-500 text-sm">17岁少年沉迷网络游戏，为获取游戏装备多次盗窃他人财物</p>
+              </div>
+              <div class="p-6">
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-gavel text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件结果</h4>
+                    <p class="text-gray-600 text-sm">法院以盗窃罪判处有期徒刑1年6个月，缓刑2年，并处罚金5000元。</p>
+                  </div>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-lightbulb-o text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件启示</h4>
+                    <p class="text-gray-600 text-sm">未成年人缺乏自制力，容易沉迷网络。家长应加强监管，引导孩子正确使用网络，树立正确消费观。</p>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="text-accent hover:text-accent/80 font-medium flex items-center">
+                 
+                </a>
+              </div>
+            </div>
+            
+            <!-- 案例3 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="p-6 border-b border-gray-100">
+                <h3 class="text-xl font-bold mb-2">案例三：未成年人结伙抢劫案</h3>
+                <p class="text-gray-500 text-sm">四名15-16岁未成年人结伙抢劫在校学生财物</p>
+              </div>
+              <div class="p-6">
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-gavel text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件结果</h4>
+                    <p class="text-gray-600 text-sm">四名少年分别被判处有期徒刑2-4年不等，并处罚金。因未满18周岁，依法从轻处罚。</p>
+                  </div>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-lightbulb-o text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件启示</h4>
+                    <p class="text-gray-600 text-sm">未成年人辨别是非能力弱，容易受不良同伴影响。家长和学校应关注孩子的社交圈子，引导建立健康的人际关系。</p>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="text-accent hover:text-accent/80 font-medium flex items-center">
+                 
+                </a>
+              </div>
+            </div>
+            
+            <!-- 案例4 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+              <div class="p-6 border-b border-gray-100">
+                <h3 class="text-xl font-bold mb-2">案例四：未成年人酒后寻衅滋事案</h3>
+                <p class="text-gray-500 text-sm">17岁少年酒后在街头闹事，打伤路人并损坏公共设施</p>
+              </div>
+              <div class="p-6">
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-gavel text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件结果</h4>
+                    <p class="text-gray-600 text-sm">法院以寻衅滋事罪判处有期徒刑1年，缓刑1年6个月，并责令其赔偿被害人损失。</p>
+                  </div>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div class="flex-shrink-0 mr-4">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <i class="fa fa-lightbulb-o text-accent"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold mb-1">案件启示</h4>
+                    <p class="text-gray-600 text-sm">未成年人饮酒不仅危害身体健康，还容易引发冲动行为。家长应加强对孩子的监管，禁止未成年人饮酒。</p>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="text-accent hover:text-accent/80 font-medium flex items-center">
+                  
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- 预防措施 -->
+      <section id="prevention" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">预防未成年犯罪措施</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">预防未成年犯罪需要家庭、学校、社会和司法部门的共同努力。以下是一些有效的预防措施和建议。</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 预防措施1 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <div class="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                <i class="fa fa-home text-accent text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-3">家庭预防</h3>
+              <ul class="space-y-3">
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>建立良好的亲子关系，多与孩子沟通交流</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>树立正确的家庭教育观念，避免溺爱或粗暴教育</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>关注孩子的日常行为和心理变化，及时发现问题</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>引导孩子正确使用网络和社交媒体</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>营造和谐的家庭氛围，避免家庭暴力</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- 预防措施2 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <div class="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                <i class="fa fa-graduation-cap text-accent text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-3">学校预防</h3>
+              <ul class="space-y-3">
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>加强法制教育，提高学生法律意识</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>开展心理健康教育，及时发现和干预学生心理问题</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>加强校园安全管理，预防校园欺凌和暴力事件</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>关注学习困难学生，避免学生辍学</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>建立家校合作机制，共同关注学生成长</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- 预防措施3 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <div class="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                <i class="fa fa-users text-accent text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-3">社会预防</h3>
+              <ul class="space-y-3">
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>净化社会文化环境，减少不良文化对未成年人的影响</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>加强对网吧、游戏厅等场所的管理，禁止未成年人进入</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>建立社区青少年活动中心，提供健康的娱乐和学习场所</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>加强对闲散青少年的管理和帮助</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                  <span>发挥社会组织作用，开展关爱未成年人活动</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- 资源链接 -->
+          <div class="mt-16 bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-xl font-bold mb-6">相关资源链接</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <a href="https://www.12355.net/" target="_blank" class="flex items-center p-4 border border-gray-200 rounded-lg hover:border-accent transition-all group">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent group-hover:text-white transition-all">
+                  <i class="fa fa-phone text-accent group-hover:text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">12355青少年服务台</h4>
+                  <p class="text-gray-500 text-sm">提供心理咨询、法律援助等服务</p>
+                </div>
+              </a>
+              
+              <a href="https://www.chinacourt.org/" target="_blank" class="flex items-center p-4 border border-gray-200 rounded-lg hover:border-accent transition-all group">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent group-hover:text-white transition-all">
+                  <i class="fa fa-gavel text-accent group-hover:text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">中国法院网</h4>
+                  <p class="text-gray-500 text-sm">提供法律法规查询和司法案例</p>
+                </div>
+              </a>
+              
+              <a href="https://www.61child.com/" target="_blank" class="flex items-center p-4 border border-gray-200 rounded-lg hover:border-accent transition-all group">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent group-hover:text-white transition-all">
+                  <i class="fa fa-book text-accent group-hover:text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">中国未成年人网</h4>
+                  <p class="text-gray-500 text-sm">提供未成年人保护相关资讯</p>
+                </div>
+              </a>
+              
+              <a href="https://www.moe.gov.cn/" target="_blank" class="flex items-center p-4 border border-gray-200 rounded-lg hover:border-accent transition-all group">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent group-hover:text-white transition-all">
+                  <i class="fa fa-graduation-cap text-accent group-hover:text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">教育部官网</h4>
+                  <p class="text-gray-500 text-sm">提供教育政策和资源</p>
+                </div>
+              </a>
+              
+              <a href="https://www.ccps.gov.cn/" target="_blank" class="flex items-center p-4 border border-gray-200 rounded-lg hover:border-accent transition-all group">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent group-hover:text-white transition-all">
+                  <i class="fa fa-shield text-accent group-hover:text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">中国预防青少年犯罪研究会</h4>
+                  <p class="text-gray-500 text-sm">专注于青少年犯罪预防研究</p>
+                </div>
+              </a>
+              
+              <a href="https://www.12309.gov.cn/" target="_blank" class="flex items-center p-4 border border-gray-200 rounded-lg hover:border-accent transition-all group">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent group-hover:text-white transition-all">
+                  <i class="fa fa-balance-scale text-accent group-hover:text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">12309中国检察网</h4>
+                  <p class="text-gray-500 text-sm">提供未成年人司法保护相关信息</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- 相关资源 -->
+      <section id="resources" class="py-20 bg-neutral">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">相关法律法规与资源</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">了解与未成年人保护和犯罪预防相关的法律法规，获取专业帮助和支持。</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 法律法规 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-gavel text-accent mr-2"></i>
+                相关法律法规
+              </h3>
+              <ul class="space-y-3">
+                <li>
+                  <a href="https://www.npc.gov.cn/wxzl/wxfl/202010/t20201017_2203416.html" target="_blank" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-file-text-o text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">中华人民共和国未成年人保护法</h4>
+                      <p class="text-gray-500 text-sm">2020年修订，全面保障未成年人权益</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.npc.gov.cn/wxzl/wxfl/202012/t20201226_2209775.html" target="_blank" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-file-text-o text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">中华人民共和国预防未成年人犯罪法</h4>
+                      <p class="text-gray-500 text-sm">2020年修订，预防未成年人犯罪</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.npc.gov.cn/wxzl/wxfl/202012/t20201226_2209774.html" target="_blank" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-file-text-o text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">中华人民共和国刑法（未成年人相关条款）</h4>
+                      <p class="text-gray-500 text-sm">规定未成年人犯罪的刑事责任</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.npc.gov.cn/wxzl/wxfl/201801/t20180129_2043363.html" target="_blank" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-file-text-o text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">中华人民共和国义务教育法</h4>
+                      <p class="text-gray-500 text-sm">保障未成年人接受义务教育的权利</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- 求助热线 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+              <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-phone text-accent mr-2"></i>
+                求助热线
+              </h3>
+              <ul class="space-y-3">
+                <li>
+                  <a href="tel:12355" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-headphones text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">12355青少年服务热线</h4>
+                      <p class="text-gray-500 text-sm">提供心理咨询、法律援助、就业指导等服务</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:12309" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-balance-scale text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">12309检察服务热线</h4>
+                      <p class="text-gray-500 text-sm">提供未成年人司法保护相关咨询</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:12348" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-gavel text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">12348公共法律服务热线</h4>
+                      <p class="text-gray-500 text-sm">提供免费法律咨询服务</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:12355" class="flex items-center p-3 border border-gray-100 rounded-lg hover:border-accent hover:bg-accent/5 transition-all">
+                    <i class="fa fa-heartbeat text-accent mr-3"></i>
+                    <div>
+                      <h4 class="font-medium">12355心理援助热线</h4>
+                      <p class="text-gray-500 text-sm">提供专业心理咨询服务</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- 参考书籍 -->
+          <div class="mt-12 bg-white rounded-xl shadow-lg p-6 card-hover">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="fa fa-book text-accent mr-2"></i>
+              参考书籍与文献
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div class="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-all">
+                <div class="h-40 bg-gray-100">
+                  <img src="https://picsum.photos/id/24/300/400" alt="《未成年人犯罪预防与矫治》封面" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                  <h4 class="font-bold mb-1">未成年人犯罪预防与矫治</h4>
+                  <p class="text-gray-500 text-sm mb-2">作者：中国青少年研究中心</p>
+                  <a href="https://book.douban.com/subject/30453375/" target="_blank" class="text-accent hover:text-accent/80 text-sm">查看详情</a>
+                </div>
+              </div>
+              
+              <div class="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-all">
+                <div class="h-40 bg-gray-100">
+                  <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/e484616e845b4411959065d8893b1e97~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;x-expires=1749808739&amp;x-signature=VlPRFWzRZdMppvUunpfz0KMlrbo%3D" alt="《未成年人司法制度研究》封面" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                  <h4 class="font-bold mb-1">未成年人司法制度研究</h4>
+                  <p class="text-gray-500 text-sm mb-2">作者：最高人民法院少年法庭工作办公室</p>
+                  <a href="https://book.douban.com/subject/30453376/" target="_blank" class="text-accent hover:text-accent/80 text-sm">查看详情</a>
+                </div>
+              </div>
+              
+              <div class="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-all">
+                <div class="h-40 bg-gray-100">
+                  <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/600149d81d434f538fac61a6988170a4~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;x-expires=1749808863&amp;x-signature=cVlrnr4llepsyXdU4WDvOCXZeeg%3D" alt="《青少年犯罪心理学》封面" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                  <h4 class="font-bold mb-1">青少年犯罪心理学</h4>
+                  <p class="text-gray-500 text-sm mb-2">作者：张倩</p>
+                  <a href="https://book.douban.com/subject/30453377/" target="_blank" class="text-accent hover:text-accent/80 text-sm">查看详情</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- 联系我们 -->
+      <section id="contact" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">联系我们</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">如果您对未成年犯罪预防有任何疑问或建议，欢迎通过以下方式联系我们。</p>
+          </div>
+          
+          <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+              <div class="bg-primary text-white p-8">
+                <h3 class="text-2xl font-bold mb-6">联系方式</h3>
+                <div class="space-y-6">
+                  <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
+                      <i class="fa fa-map-marker text-white"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-medium mb-1">地址</h4>
+                      <p class="text-white/80">北京市海淀区中关村南大街5号</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
+                      <i class="fa fa-phone text-white"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-medium mb-1">电话</h4>
+                      <p class="text-white/80">010-12345678</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
+                      <i class="fa fa-envelope text-white"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-medium mb-1">邮箱</h4>
+                      <p class="text-white/80">contact@example.com</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mt-10">
+                  <h4 class="font-medium mb-4">关注我们</h4>
+                  <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+                      <i class="fa fa-weixin text-white"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+                      <i class="fa fa-weibo text-white"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+                      <i class="fa fa-qq text-white"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-8">
+                <h3 class="text-2xl font-bold mb-6">留言反馈</h3>
+                <form>
+                  <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                    <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="请输入您的姓名">
+                  </div>
+                  
+                  <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="请输入您的邮箱">
+                  </div>
+                  
+                  <div class="mb-4">
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">留言内容</label>
+                    <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="请输入您的留言内容"></textarea>
+                  </div>
+                  
+                  <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-white font-medium py-2 px-4 rounded-lg transition-all">
+                    提交留言
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- 页脚 -->
+      <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 class="text-lg font-bold mb-4">法治护航</h3>
+              <p class="text-white/70 mb-4">关注未成年人健康成长，预防和减少未成年人犯罪，营造良好的社会环境。</p>
+              <div class="flex space-x-4">
+                <a href="#" class="text-white/70 hover:text-white transition-all">
+                  <i class="fa fa-weixin"></i>
+                </a>
+                <a href="#" class="text-white/70 hover:text-white transition-all">
+                  <i class="fa fa-weibo"></i>
+                </a>
+                <a href="#" class="text-white/70 hover:text-white transition-all">
+                  <i class="fa fa-qq"></i>
+                </a>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-bold mb-4">快速链接</h3>
+              <ul class="space-y-2">
+                <li><a href="#home" class="text-white/70 hover:text-white transition-all">首页</a></li>
+                <li><a href="#overview" class="text-white/70 hover:text-white transition-all">现状概览</a></li>
+                <li><a href="#causes" class="text-white/70 hover:text-white transition-all">原因分析</a></li>
+                <li><a href="#cases" class="text-white/70 hover:text-white transition-all">典型案例</a></li>
+                <li><a href="#prevention" class="text-white/70 hover:text-white transition-all">预防措施</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-bold mb-4">相关资源</h3>
+              <ul class="space-y-2">
+                <li><a href="#resources" class="text-white/70 hover:text-white transition-all">法律法规</a></li>
+                <li><a href="#resources" class="text-white/70 hover:text-white transition-all">求助热线</a></li>
+                <li><a href="#resources" class="text-white/70 hover:text-white transition-all">参考书籍</a></li>
+                <li><a href="https://www.12355.net/" target="_blank" class="text-white/70 hover:text-white transition-all">12355青少年服务台</a></li>
+                <li><a href="https://www.chinacourt.org/" target="_blank" class="text-white/70 hover:text-white transition-all">中国法院网</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-bold mb-4">联系我们</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center">
+                  <i class="fa fa-map-marker mr-2 text-white/70"></i>
+                  <span class="text-white/70">北京市海淀区中关村南大街5号</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fa fa-phone mr-2 text-white/70"></i>
+                  <span class="text-white/70">010-12345678</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fa fa-envelope mr-2 text-white/70"></i>
+                  <span class="text-white/70">contact@example.com</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="border-t border-white/10 mt-8 pt-8 text-center text-white/50 text-sm">
+            <p>© 2025 法治护航 - 未成年人犯罪预防与研究中心. 保留所有权利.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
+  
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-accent text-white shadow-lg flex items-center justify-center opacity-0 invisible transition-all z-50">
+      <i class="fa fa-arrow-up"></i>
+    </button>
+  
+    <!-- JavaScript -->
+    <script>
+      // 导航栏滚动效果
+      const sidebar = document.getElementById('sidebar');
+      let lastScrollTop = 0;
+      
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > 100) {
+          sidebar.classList.add('shadow-xl');
+          document.getElementById('backToTop').classList.remove('opacity-0', 'invisible');
+          document.getElementById('backToTop').classList.add('opacity-100', 'visible');
+        } else {
+          sidebar.classList.remove('shadow-xl');
+          document.getElementById('backToTop').classList.add('opacity-0', 'invisible');
+          document.getElementById('backToTop').classList.remove('opacity-100', 'visible');
+        }
+        
+        lastScrollTop = scrollTop;
+      });
+      
+      // 回到顶部功能
+      document.getElementById('backToTop').addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // 平滑滚动
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // 图表初始化
+      document.addEventListener('DOMContentLoaded', function() {
+        // 图表1：未成年犯罪人数趋势
+        const crimeTrendCtx = document.getElementById('crimeTrendChart').getContext('2d');
+        new Chart(crimeTrendCtx, {
+          type: 'line',
+          data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: '未成年犯罪人数',
+              data: [3.3, 3.5, 3.8, 3.6, 3.4],
+              borderColor: '#ff3d00',
+              backgroundColor: 'rgba(255, 61, 0, 0.1)',
+              tension: 0.3,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                title: {
+                  display: true,
+                  text: '万人'
+                }
+              }
+            }
+          }
+        });
+        
+        // 图表2：犯罪类型分布
+        const crimeTypeCtx = document.getElementById('crimeTypeChart').getContext('2d');
+        new Chart(crimeTypeCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['抢劫罪', '盗窃罪', '故意伤害罪', '寻衅滋事罪', '强奸罪', '其他'],
+            datasets: [{
+              data: [28, 25, 20, 15, 7, 5],
+              backgroundColor: [
+                '#ff3d00',
+                '#ff7539',
+                '#ff9a62',
+                '#ffbc8f',
+                '#ffddbd',
+                '#f5f5f5'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'right',
+              }
+            },
+            cutout: '65%'
+          }
+        });
+        
+        // 图表3：各因素对未成年犯罪的影响程度
+        const factorsCtx = document.getElementById('factorsChart').getContext('2d');
+        new Chart(factorsCtx, {
+          type: 'bar',
+          data: {
+            labels: ['家庭教育缺失', '学校教育不足', '社会不良影响', '心理问题', '法律意识淡薄', '经济因素'],
+            datasets: [{
+              label: '影响程度（百分比）',
+              data: [38, 25, 20, 12, 10, 5],
+              backgroundColor: '#ff3d00',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 50,
+                ticks: {
+                  callback: function(value) {
+                    return value + '%';
+                  }
+                }
+              }
+            }
+          }
+        });
+      });
+    </script>
+  
+      </body></html>
