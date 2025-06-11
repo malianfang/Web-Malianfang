@@ -1,6 +1,27 @@
 <html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>守护青春 远离犯罪</title>
+    <style>
+        /* 设置 logo 的样式 */
+        .logo {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 100px;
+    height: auto;
+    z-index: 999;
+    background: rgba(255,255,255,0.9);
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 添加 logo 图片 -->
+    <img class="logo" src="https://mmbiz.qpic.cn/mmbiz_png/KM3FU3XPKYibHicdC1UpqdYAOpF6W0Sg8SJaicrJuOYp7GBdibCcvvYhmhkeLzB2tlC0eKWUQmp95K2FDJKFBjuw1Q/0?wxfrom=12&tp=wxpic&usePicPrefetch=1&wx_fmt=png&from=appmsg&watermark=1" alt="Logo">
     <title>未成年犯罪数据可视化</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -844,93 +865,7 @@
         </div>
       </section>
   
-      <!-- 联系我们 -->
-      <section id="contact" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-          <div class="text-center mb-16">
-            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">联系我们</h2>
-            <p class="text-gray-600 max-w-3xl mx-auto">如果您对未成年犯罪预防有任何疑问或建议，欢迎通过以下方式联系我们。</p>
-          </div>
-          
-          <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2">
-              <div class="bg-primary text-white p-8">
-                <h3 class="text-2xl font-bold mb-6">联系方式</h3>
-                <div class="space-y-6">
-                  <div class="flex items-start">
-                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
-                      <i class="fa fa-map-marker text-white"></i>
-                    </div>
-                    <div>
-                      <h4 class="font-medium mb-1">地址</h4>
-                      <p class="text-white/80">北京市海淀区中关村南大街5号</p>
-                    </div>
-                  </div>
-                  
-                  <div class="flex items-start">
-                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
-                      <i class="fa fa-phone text-white"></i>
-                    </div>
-                    <div>
-                      <h4 class="font-medium mb-1">电话</h4>
-                      <p class="text-white/80">010-12345678</p>
-                    </div>
-                  </div>
-                  
-                  <div class="flex items-start">
-                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
-                      <i class="fa fa-envelope text-white"></i>
-                    </div>
-                    <div>
-                      <h4 class="font-medium mb-1">邮箱</h4>
-                      <p class="text-white/80">contact@example.com</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="mt-10">
-                  <h4 class="font-medium mb-4">关注我们</h4>
-                  <div class="flex space-x-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
-                      <i class="fa fa-weixin text-white"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
-                      <i class="fa fa-weibo text-white"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
-                      <i class="fa fa-qq text-white"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="p-8">
-                <h3 class="text-2xl font-bold mb-6">留言反馈</h3>
-                <form>
-                  <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
-                    <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="请输入您的姓名">
-                  </div>
-                  
-                  <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
-                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="请输入您的邮箱">
-                  </div>
-                  
-                  <div class="mb-4">
-                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">留言内容</label>
-                    <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="请输入您的留言内容"></textarea>
-                  </div>
-                  
-                  <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-white font-medium py-2 px-4 rounded-lg transition-all">
-                    提交留言
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     
   
       <!-- 页脚 -->
       <footer class="bg-primary text-white py-12">
@@ -979,7 +914,7 @@
               <ul class="space-y-2">
                 <li class="flex items-center">
                   <i class="fa fa-map-marker mr-2 text-white/70"></i>
-                  <span class="text-white/70">北京市海淀区中关村南大街5号</span>
+                  <span class="text-white/70">xx省XX市</span>
                 </li>
                 <li class="flex items-center">
                   <i class="fa fa-phone mr-2 text-white/70"></i>
@@ -994,7 +929,7 @@
           </div>
           
           <div class="border-t border-white/10 mt-8 pt-8 text-center text-white/50 text-sm">
-            <p>© 2025 法治护航 - 未成年人犯罪预防与研究中心. 保留所有权利.</p>
+            <p>© 2025 第13届未来设计设·全国高校数字艺术设计大赛 比赛专用.</p>
           </div>
         </div>
       </footer>
