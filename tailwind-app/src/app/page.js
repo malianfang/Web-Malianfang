@@ -1,6 +1,6 @@
-import Navbar from "@/app/components/Navbar";  // 修正后的路径
-import ExerciseCard from "@/app/components/ExerciseCard";
-import exercises from "@/date/exercises.json"; // 修正后的路径
+import Navbar from "@/components/Navbar";
+import ExerciseCard from "@/components/ExerciseCard"; // 导入练习卡片组件
+import exercises from "@/data/exercises.json"; // 从 JSON 文件导入练习数据
 
 // 示例练习数据
 // const exercises = [

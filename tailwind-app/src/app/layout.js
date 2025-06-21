@@ -1,5 +1,5 @@
 import "./globals.css";
-import Footer from "@/app/components/Footer"; // 修正后的路径
+import Footer from "@/components/Footer"; // 导入 Footer 组件
 
 export const metadata = {
   title: "Web前端开发练习平台", // 更新标题

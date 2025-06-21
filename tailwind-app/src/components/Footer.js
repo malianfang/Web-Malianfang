@@ -15,7 +15,7 @@ export default function Footer() {
       setError(null);
       try {
         // 请将 'YOUR_WORKER_URL' 替换为您实际部署的 Cloudflare Worker URL
-        const workerUrl = "https://waka.yangzh.cn";
+        const workerUrl = "withered-limit-3763.1472574153.workers.dev";
         const response = await fetch(workerUrl);
 
         if (!response.ok) {
