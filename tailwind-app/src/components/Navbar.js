@@ -19,7 +19,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/github-stats" className="hover:text-gray-300">
+            <Link href="/exercises/githubstat.html" className="hover:text-gray-300">
               GitHub 统计
             </Link>
           </li>

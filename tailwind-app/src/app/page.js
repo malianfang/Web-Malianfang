@@ -66,7 +66,7 @@ export default function Home() {
           ))}
         </div>
       </main>
-      {/* Footer 组件将在 layout.js 中添加 */}
+      
     </div>
   );
 }

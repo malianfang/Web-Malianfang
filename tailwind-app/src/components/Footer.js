@@ -15,7 +15,7 @@ export default function Footer() {
       setError(null);
       try {
         // 请将 'YOUR_WORKER_URL' 替换为您实际部署的 Cloudflare Worker URL
-        const workerUrl = "https://wakatime-api-proxy.1472574153.workers.dev/";
+        const workerUrl = "http://mlf-wakatime.wemedia.press/";
         const response = await fetch(workerUrl);
 
         if (!response.ok) {
@@ -64,7 +64,7 @@ export default function Footer() {
           Wakatime :{" "}
           {isLoading ? "Loading..." : error ? `Error: ${error}` : wakatimeText}
         </p>
-        {/* 可以在这里添加更多链接或信息 */}
+
       </div>
     </footer>
   );
