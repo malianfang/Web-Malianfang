@@ -27,7 +27,6 @@
 选择在`layout.js`中集成QAnything是因为`layout.js`是Next.js应用的全局布局文件，所有页面都会共享该布局。这样可以确保在整个应用的所有页面中都能使用QAnything的问答功能，无需在每个页面单独引入。
 
 ### WakaTime API集成方法
-目前提供的代码片段中未涉及WakaTime API的集成。若要集成WakaTime API，可以按照以下步骤进行：
 
 1. 获取API密钥：在WakaTime官网注册并获取API密钥。
 2. 使用Cloudflare Workers：WakaTime API需要在Cloudflare Workers中进行配置和部署。可以按照课程开发文档指导进行设置。
