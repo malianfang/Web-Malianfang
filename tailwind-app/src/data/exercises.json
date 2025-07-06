@@ -40,7 +40,7 @@
     "title": "React 组件化开发",
     "description": "学习使用React构建可复用的UI组件，理解状态和属性。",
     "imageUrl": "https://ts4.tc.mm.bing.net/th/id/OIP-C.oRx7W_UMz9eacKNYzzMgOQHaEI?rs=1&pid=ImgDetMain&o=7&rm=3",
-    "link": "/exercises/javaScript(3).html",
+    "link": "/exercises/javaScript(2).html",
     "tags": [
       "React",
       "组件",
@@ -52,7 +52,7 @@
     "title": "Next.js 核心概念",
     "description": "学习Next.js框架的核心概念：组件、jsx、props",
     "imageUrl": "https://ts1.tc.mm.bing.net/th/id/OIP-C.J71kAzixRM4BLj0UzufiUwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
-    "link": "/exercises/Next.js.html",
+    "link": "/exercises/me.html",
     "tags": [
       "React",
       "组件",

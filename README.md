@@ -50,7 +50,7 @@
           );
         }
 
-![WakaTime API运行截图](./images/work(1).jpg)
+![WakaTime API运行截图](./images/wakatime.jpg)
 
 ### Next.js项目结构
 
@@ -91,7 +91,6 @@
   - `exercises`目录：包含各种练习的HTML文件。
 - `package.json`：项目依赖和脚本配置文件。
 
-![课程作业运行截图](./images/work(1).jpg)
 
 ### 旧作业整合方式
 
@@ -118,7 +117,7 @@
 ```
 ### 自主创建项目
 
-充分利用课程所学知识，自主设计网页
+充分利用课程所学知识，自主设计与未成年犯罪相关的网页
 
 ![课程作业运行截图](./images/work(3).jpg)
 
