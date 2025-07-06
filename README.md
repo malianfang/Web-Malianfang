@@ -1,7 +1,13 @@
+![QAnything运行截图](./images/Qanything.jpg)
+![WakaTime API运行截图](./images/work(1).jpg)
+![课程作业提交记录运行截图](./images/work(2).jpg)
+![课程作业运行截图](./images/work.jpg)
+![课程作业运行截图](./images/work(1).jpg)
+
+
 ### 项目简介
 该项目包含两个基于Next.js构建的Web前端开发相关应用：`my-next-app`和`tailwind-app`。这两个应用主要用于展示《Web前端开发》课程的练习成果，涵盖了HTML、CSS、JavaScript、React、Next.js等多个前端技术领域的练习内容。
 
-![QAnything运行截图](./images/Qanything.jpg)
 ### QAnything集成路径与实现细节
 
 #### 集成路径
@@ -23,7 +29,7 @@
 - 选择路径及原因：使用QAnything创建知识库，将知识库关联到Agents，进行发布，嵌入网页选择复制链接，写入相应的代码文件中。
 选择在`layout.js`中集成QAnything是因为`layout.js`是Next.js应用的全局布局文件，所有页面都会共享该布局。这样可以确保在整个应用的所有页面中都能使用QAnything的问答功能，无需在每个页面单独引入。
 
-![WakaTime API运行截图](./images/work(1).jpg)
+
 ### WakaTime API集成方法
 
 1. 获取API密钥：在WakaTime官网注册并获取API密钥。
@@ -70,8 +76,7 @@
   - `exercises`目录：包含各种练习的HTML文件。
 - `package.json`：项目依赖和脚本配置文件。
 
-![课程作业运行截图](./images/work.jpg)
-![课程作业运行截图](./images/work(1).jpg)
+
 ### 旧作业整合方式
 为了统一管理旧作业，在项目的`public`目录下新建`exercises`文件夹，并将所有作业的HTML文件移动到该文件夹中。例如，在`tailwind-app`项目中已经存在`public/exercises`目录，将相关的HTML文件（如`week01.html`、`javaScript(1).html`等）放在该目录下，并在`src/data/exercises.json`文件中更新练习的链接。
 
