@@ -99,7 +99,7 @@
 ![课程作业提交记录运行截图](./images/work(2).jpg)
 
 ```json
-// tailwind-app/src/data/exercises.json
+
 [
   {
     "id": 1,
@@ -112,7 +112,7 @@
       "基础"
     ]
   },
-  // 其他练习项..
+
 ]
 ```
 ### 自主创建项目
