@@ -1,19 +1,19 @@
-![QAnything运行截图](./images/Qanything.jpg)
-![WakaTime API运行截图](./images/work(1).jpg)
-![课程作业提交记录运行截图](./images/work(2).jpg)
-![课程作业运行截图](./images/work.jpg)
-![课程作业运行截图](./images/work(1).jpg)
-
-
 ### 项目简介
-该项目包含两个基于Next.js构建的Web前端开发相关应用：`my-next-app`和`tailwind-app`。这两个应用主要用于展示《Web前端开发》课程的练习成果，涵盖了HTML、CSS、JavaScript、React、Next.js等多个前端技术领域的练习内容。
+
+该项目是《Web 前端开发》课程的综合实践成果展示平台，采用 Next.js 框架构建了两个核心应用my-next-app与tailwind-app，旨在系统性呈现从基础到进阶的前端技术学习轨迹。项目以模块化结构整合了 HTML、CSS、JavaScript、React 及 Next.js 等技术栈的实战练习，同时集成 QAnything 智能问答工具与 WakaTime 开发数据统计功能，形成兼具学习展示与效率管理的复合型前端应用。
+
+![项目页面展示](./images/page.jpg)
 
 ### QAnything集成路径与实现细节
 
+![QAnything运行截图](./images/Qanything.jpg)
+
 #### 集成路径
-在`tailwind-app`项目的`src/app/layout.js`文件中，通过`<script>`标签引入QAnything的脚本，并配置相关参数实现集成。
+
+我选择直接在 Next.js 应用中通过 iframe 嵌入QAnything提供的现有HTML问答页面。在`tailwind-app`项目的`src/app/layout.js`文件中，通过`<script>`标签引入QAnything的脚本，并配置相关参数实现集成。
 
 #### 实现细节
+
 ```javascript
 // tailwind-app/src/app/layout.js
 <script
@@ -32,9 +32,13 @@
 
 ### WakaTime API集成方法
 
-1. 获取API密钥：在WakaTime官网注册并获取API密钥。
-2. 使用Cloudflare Workers：WakaTime API需要在Cloudflare Workers中进行配置和部署。可以按照课程开发文档指导进行设置。
-3. 发起API请求：在Next.js项目中使用`fetch`发起API请求。例如，在某个页面组件中获取用户的统计数据：
+![WakaTime API运行截图](./images/work(1).jpg)
+
+1. 创建 Cloudflare Worker 项目
+2. 编写 Worker 逻辑以获取 Wakatime 数据
+3. 配置并部署 Cloudflare Worker
+4. 在 Next.js 中创建或修改 Footer 组件
+5. 在 Footer 组件中调用 Worker API 并显示数据
   // 请将 'YOUR_WORKER_URL' 替换为您实际部署的 Cloudflare Worker URL
         const workerUrl = "http://mlf-wakatime.wemedia.press/";
         const response = await fetch(workerUrl);
@@ -51,7 +55,18 @@
 
 ### Next.js项目结构
 
+![课程作业运行截图](./images/work.jpg)
+
+#### 项目结构
+
+ 1. HTML 基础：包含文档结构、语义化标签、表单设计等基础练习
+ 2. CSS 进阶：涵盖布局方案、动画效果、响应式设计等高级应用
+ 3. JavaScript 核心：聚焦 DOM 操作、事件处理、异步编程等核心概念
+ 4. React 实战：从基础组件到状态管理、生命周期等 React 特性实践
+ 5. Next.js 应用：服务器端渲染、路由优化、API 路由等框架特性演练
+
 #### `my-next-app`
+
 - `src`目录：包含应用的主要源代码。
   - `app`目录：Next.js的App Router目录，包含页面组件。
     - `page.js`：首页组件。
@@ -61,6 +76,7 @@
 - `package.json`：项目依赖和脚本配置文件。
 
 #### `tailwind-app`
+
 - `src`目录：包含应用的主要源代码。
   - `app`目录：Next.js的App Router目录，包含页面组件。
     - `page.js`：首页组件，展示练习卡片。
@@ -75,9 +91,17 @@
 - `public`目录：包含静态资源和练习的HTML文件。
   - `exercises`目录：包含各种练习的HTML文件。
 - `package.json`：项目依赖和脚本配置文件。
+![课程作业运行截图](./images/work(1).jpg)
 
+#### 自主创建项目
+
+充分利用课程所学知识，自主设计网页
+![课程作业运行截图](./images/work(3).jpg)
 
 ### 旧作业整合方式
+
+![课程作业提交记录运行截图](./images/work(2).jpg)
+
 为了统一管理旧作业，在项目的`public`目录下新建`exercises`文件夹，并将所有作业的HTML文件移动到该文件夹中。例如，在`tailwind-app`项目中已经存在`public/exercises`目录，将相关的HTML文件（如`week01.html`、`javaScript(1).html`等）放在该目录下，并在`src/data/exercises.json`文件中更新练习的链接。
 
 ```json
@@ -94,13 +118,14 @@
       "基础"
     ]
   },
-  // 其他练习项...
+  // 其他练习项..
 ]
 ```
 
 ### 项目运行指南
 
 #### 启动开发服务器
+
 1. 进入项目目录：
    - 对于`my-next-app`：
      ```bash
