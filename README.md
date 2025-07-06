@@ -6,8 +6,6 @@
 
 ### QAnything集成路径与实现细节
 
-![QAnything运行截图](./images/Qanything.jpg)
-
 #### 集成路径
 
 我选择直接在 Next.js 应用中通过 iframe 嵌入QAnything提供的现有HTML问答页面。在`tailwind-app`项目的`src/app/layout.js`文件中，通过`<script>`标签引入QAnything的脚本，并配置相关参数实现集成。
@@ -29,10 +27,9 @@
 - 选择路径及原因：使用QAnything创建知识库，将知识库关联到Agents，进行发布，嵌入网页选择复制链接，写入相应的代码文件中。
 选择在`layout.js`中集成QAnything是因为`layout.js`是Next.js应用的全局布局文件，所有页面都会共享该布局。这样可以确保在整个应用的所有页面中都能使用QAnything的问答功能，无需在每个页面单独引入。
 
+![QAnything运行截图](./images/Qanything.jpg)
 
 ### WakaTime API集成方法
-
-![WakaTime API运行截图](./images/work(1).jpg)
 
 1. 创建 Cloudflare Worker 项目
 2. 编写 Worker 逻辑以获取 Wakatime 数据
@@ -53,9 +50,9 @@
           );
         }
 
-### Next.js项目结构
+![WakaTime API运行截图](./images/work(1).jpg)
 
-![课程作业运行截图](./images/work.jpg)
+### Next.js项目结构
 
 #### 项目结构
 
@@ -64,6 +61,8 @@
  3. JavaScript 核心：聚焦 DOM 操作、事件处理、异步编程等核心概念
  4. React 实战：从基础组件到状态管理、生命周期等 React 特性实践
  5. Next.js 应用：服务器端渲染、路由优化、API 路由等框架特性演练
+
+![课程作业运行截图](./images/work.jpg)
 
 #### `my-next-app`
 
@@ -91,18 +90,14 @@
 - `public`目录：包含静态资源和练习的HTML文件。
   - `exercises`目录：包含各种练习的HTML文件。
 - `package.json`：项目依赖和脚本配置文件。
+
 ![课程作业运行截图](./images/work(1).jpg)
-
-#### 自主创建项目
-
-充分利用课程所学知识，自主设计网页
-![课程作业运行截图](./images/work(3).jpg)
 
 ### 旧作业整合方式
 
-![课程作业提交记录运行截图](./images/work(2).jpg)
-
 为了统一管理旧作业，在项目的`public`目录下新建`exercises`文件夹，并将所有作业的HTML文件移动到该文件夹中。例如，在`tailwind-app`项目中已经存在`public/exercises`目录，将相关的HTML文件（如`week01.html`、`javaScript(1).html`等）放在该目录下，并在`src/data/exercises.json`文件中更新练习的链接。
+
+![课程作业提交记录运行截图](./images/work(2).jpg)
 
 ```json
 // tailwind-app/src/data/exercises.json
@@ -121,6 +116,11 @@
   // 其他练习项..
 ]
 ```
+### 自主创建项目
+
+充分利用课程所学知识，自主设计网页
+
+![课程作业运行截图](./images/work(3).jpg)
 
 ### 项目运行指南
 

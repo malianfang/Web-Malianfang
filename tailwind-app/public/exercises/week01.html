@@ -6,65 +6,155 @@
     <title>电视剧《北上》介绍</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-      }
-      h1 {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
         color: #333;
+      }
+
+      header {
+        background-color: #222;
+        color: white;
         text-align: center;
+        padding: 50px 0;
       }
+
+      header h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 1.2em;
+      }
+
+      section {
+        padding: 40px;
+        margin: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #007BFF;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
       p {
-        line-height: 1.6;
+        line-height: 1.8;
+        margin-bottom: 20px;
       }
+
       ol {
         padding-left: 20px;
       }
+
       table {
         border-collapse: collapse;
         width: 100%;
+        margin-bottom: 20px;
       }
-      th, td {
+
+      th,
+      td {
         border: 1px solid #ddd;
-        padding: 8px;
+        padding: 12px;
         text-align: left;
       }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
       form {
-        margin-top: 20px;
         text-align: center;
+        margin-top: 20px;
       }
+
       input[type="text"] {
-        padding: 8px;
-        width: 200px;
+        padding: 12px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
       }
+
       input[type="submit"] {
-        padding: 8px 15px;
+        padding: 12px 20px;
         background-color: #007BFF;
         color: white;
         border: none;
+        border-radius: 4px;
         cursor: pointer;
       }
+
       input[type="submit"]:hover {
         background-color: #0056b3;
+      }
+
+      .image-container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .quote {
+        background-color: #f9f9f9;
+        border-left: 5px solid #007BFF;
+        padding: 20px;
+        margin: 20px 0;
+        font-style: italic;
       }
     </style>
   </head>
   <body>
-    <h1>电视剧《北上》</h1>
-    <div>
+    <header>
+      <h1>电视剧《北上》</h1>
+      <p>一部展现运河文化与民族精神的史诗巨作</p>
+    </header>
+    <section>
+      <h2>剧情简介</h2>
       <p>
-        《北上》是一部极具特色的电视剧，它以独特的视角展现了特定的历史与人文故事。该剧根据徐则臣茅盾文学奖同名获奖小说改编，
-        讲述了运河沿岸一群少年从相知到相伴、到分离、重聚，展现出他们对民族文化的认同和对民族精神的传承。运河沿岸的年轻一代正在快速成长为各行各业的中流砥柱，他们用实际行动回馈家乡和社会的故事。
+        《北上》是一部极具特色的电视剧，它以独特的视角展现了特定的历史与人文故事。该剧根据徐则臣茅盾文学奖同名获奖小说改编，讲述了运河沿岸一群少年从相知到相伴、到分离、重聚，展现了他们对民族文化的认同和对民族精神的传承。运河沿岸的年轻一代正在快速成长为各行各业的中流砥柱，他们实际行动回馈家乡和社会的故事。
         <a href="https://baike.baidu.com/item/%E5%8C%97%E4%B8%8A/63017473">点击这里</a> 可以查看该剧更详细的百科介绍。
       </p>
-      <ol>
-        <li>精彩剧情：围绕大运河展开，讲述了不同人物的命运交织。</li>
-        <li>演员阵容：汇聚了众多实力派演员，为剧集增色不少。</li>
-        <li>文化内涵：深入挖掘大运河文化，具有深厚的历史底蕴。</li>
-        <li>艺术价值：在画面、音乐等方面都有较高的水准。</li>
-      </ol>
-      <p>
-        <img src="https://bkimg.cdn.bcebos.com/pic/09fa513d269759ee3d6d16a665a254166d224f4a711e" alt="电视剧《北上》海报" width="400" />
+      <div class="image-container">
+        <img
+          src="https://bkimg.cdn.bcebos.com/pic/09fa513d269759ee3d6d16a665a254166d224f4a711e"
+          alt="电视剧《北上》海报"
+        />
+      </div>
+      <p class="quote">
+        “《北上》不仅仅是一部电视剧，更是一部关于运河文化的活化石，它让我们看到了历史与现代的交融。”——知名影评人
       </p>
+    </section>
+    <section>
+      <h2>精彩看点</h2>
+      <ol>
+        <li>
+          <strong>精彩剧情</strong>：围绕大运河展开，讲述了不同人物的命运交织。从少年时期的纯真友谊到成年后的责任担当，每一个情节都扣人心弦。
+        </li>
+        <li>
+          <strong>演员阵容</strong>：汇聚了众多实力派演员，如白鹿、欧豪领衔主演，他们用精湛的演技为剧集增色不少。
+        </li>
+        <li>
+          <strong>文化内涵</strong>：深入挖掘大运河文化，具有深厚的历史底蕴。剧中展现了运河两岸的风土人情、传统技艺等，让观众感受到了运河文化的魅力。
+        </li>
+        <li>
+          <strong>艺术价值</strong>：在画面、音乐等方面都有较高的水准。精美的画面和悠扬的音乐相得益彰，为观众带来了一场视听盛宴。
+        </li>
+      </ol>
+    </section>
+    <section>
+      <h2>基本信息</h2>
       <table>
         <thead>
           <tr>
@@ -91,10 +181,43 @@
           </tr>
         </tbody>
       </table>
+    </section>
+    <section>
+      <h2>更多图片</h2>
+      <div class="image-container">
+        <img
+          src="https://bkimg.cdn.bcebos.com/pic/8435e5dde71190ef76c64a724a428a16fdfaaf51ca5e?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080"
+          alt="电视剧《北上》剧照1"
+        />
+      </div>
+      <div class="image-container">
+        <img
+          src="https://bkimg.cdn.bcebos.com/pic/279759ee3d6d55fbb2fbbaa84e78584a20a4472377b0?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080"
+          alt="电视剧《北上》剧照2"
+        />
+      </div>
+      <div class="relative group mb-8">
+        <img 
+          src="海报URL"
+          alt="电视剧海报"
+          class="w-full max-w-2xl mx-auto rounded-xl shadow-lg transition-all duration-300 
+               group-hover:scale-105 group-hover:shadow-xl aspect-video object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl"></div>
+        <span class="absolute bottom-4 left-4 text-white font-medium text-lg drop-shadow-md">
+          精彩剧照
+        </span>
+      </div>
+    </section>
+    <section>
       <form action="https://www.baidu.com/s">
-        <input type="text" name="wd" placeholder="搜索电视剧《北上》相关信息" />
+        <input
+          type="text"
+          name="wd"
+          placeholder="搜索电视剧《北上》相关信息"
+        />
         <input type="submit" value="搜索" />
       </form>
-    </div>
+    </section>
   </body>
 </html>
